@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+	PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+	<mapper namespace="com.bhcy.mapper.RegisterInfoMapper">
+        <insert id="add" parameterType="RegisterInfo" >
+            insert into registerinfo ( telephone,name,companyArea,companyType,companyName,registerDate ) 
+           					  values (#{telephone},#{name},#{companyArea},#{companyType},#{companyName},#{registerDate})   
+        </insert>
+         
+        <delete id="delete" parameterType="RegisterInfo" >
+            delete from registerinfo where id= #{id}  
+        </delete>
+         
+        <select id="get" parameterType="_int" resultType="RegisterInfo">
+            select * from   registerinfo  where id= #{id}   
+        </select>
+ 
+        <update id="update" parameterType="RegisterInfo" >
+            update registerinfo set 
+            	telephone=#{telephone},
+            	name=#{name},
+            	companyArea=#{companyArea},
+            	companyType=#{companyType},
+            	companyName=#{companyName},
+            	registerDate=#{registerDate} 
+            where id=#{id}   
+        </update>
+        <select id="list" resultType="RegisterInfo">
+            select * from   registerinfo where 1=1  
+             <if test="id!=null "> and id = #{id}</if>
+             <if test="telephone!=null "> and telephone = #{telephone}</if>
+             <if test="name!=null "> and name = #{name}</if>
+             <if test="companyArea!=null "> and companyArea = #{companyArea}</if>
+             <if test="companyType!=null "> and companyType = #{companyType}</if>
+             <if test="companyName!=null "> and companyName = #{companyName}</if>
+             <if test="registerDate!=null "> and registerDate = #{registerDate}</if>
+            <if test="start!=null and pageSize!=null">
+                    limit #{start},#{pageSize}
+            </if>
+        </select>
+        <select id="total" resultType="int">
+            select count(*) from   registerinfo     
+        </select>            
+    </mapper>
